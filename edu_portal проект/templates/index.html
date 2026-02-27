@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Куда поступить после 9 и 11 класса</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Выбор учебного заведения</h1>
+
+        <!-- Форма выбора класса -->
+        <form method="POST" class="mb-4 text-center">
+            <label for="class" class="form-label">Выберите, после какого класса вы планируете поступать:</label>
+            <select name="class" id="class" class="form-select form-select-lg" onchange="this.form.submit()">
+                <option value="9" {% if selected_class == '9' %}selected{% endif %}>После 9 класса</option>
+                <option value="11" {% if selected_class == '11' %}selected{% endif %}>После 11 класса</option>
+            </select>
+        </form>
+
+        <!-- Список заведений -->
+        <div class="row">
+            {% for inst in institutions %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{ inst.name }}</h5>
+                        <p class="card-text"><strong>Город:</strong> {{ inst.city }}</p>
+                        <p class="card-text"><strong>Специальности:</strong></p>
+                        <ul class="mb-3">
+                            {% for spec in inst.specialties %}
+                            <li>{{ spec }}</li>
+                            {% endfor %}
+                        </ul>
+                        <p class="card-text"><strong>Поступление:</strong> {{ inst.entrance }}</p>
+                        <p class="card-text"><strong>Необходимые предметы:</strong> {{ inst.required_subjects | join(", ") }}</p>
+                        {% if inst.min_scores %}
+                        <p class="card-text"><strong>Минимальные баллы ЕГЭ:</strong> {{ inst.min_scores }}</p>
+                        {% endif %}
+                        <a href="{{ inst.link }}" class="btn btn-outline-primary btn-sm" target="_blank">Сайт заведения</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
