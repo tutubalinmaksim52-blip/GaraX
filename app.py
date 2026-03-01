@@ -98,5 +98,8 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 print("\nНажмите Enter для остановки...")
-input()
+name = os.environ.get(GaraX, Томас)
+
+print(f"привет,{Garax}!")
+
 
